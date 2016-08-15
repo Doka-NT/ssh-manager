@@ -1,4 +1,6 @@
 # ssh-manager
+GUI ssh manager for Ubuntu 16.04 (not tested on below versions)
+
 # Requirements
 - PyQt4
 
