@@ -1,0 +1,8 @@
+{
+  "connections": [
+    {
+      "uri": "root@localhost -p 22",
+      "label" : "root@localhost"
+    }
+  ]
+}
