@@ -1,8 +1,16 @@
 {
+  "command": {
+    "ssh": [
+      "gnome-terminal",
+      "-x",
+      "ssh"
+    ],
+    "edit": ["xdg-open"]
+  },
   "connections": [
     {
       "uri": "root@localhost -p 22",
-      "label" : "root@localhost"
+      "label": "root@localhost"
     }
   ]
 }
