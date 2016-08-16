@@ -7,10 +7,21 @@
     ],
     "edit": ["xdg-open"]
   },
+  "window": {
+    "x": 300,
+    "y": 300,
+    "width": 250,
+    "height": 400
+  },
   "connections": [
     {
-      "uri": "root@localhost -p 22",
-      "label": "root@localhost"
+      "host": "root@localhost",
+      "label": "Localhost with port specified",
+      "port": 22
+    },
+    {
+      "host": "root@localhost",
+      "label": "Localhost with default port"
     }
   ]
 }

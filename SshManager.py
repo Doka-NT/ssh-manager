@@ -22,20 +22,21 @@ class SshManager(QtGui.QWidget):
 
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
+        # Load configuration
+        self.load_config_file()
+
         # Set up UI
         self.setup_ui()
         # Connect slots
         self.connect_slots()
-
-        # Load connections
-        self.connections_load()
 
         # update connections list
         self.update_connection_list()
 
     def setup_ui(self):
         """ Setup main UI """
-        self.setGeometry(300, 300, 250, 150)
+        pos = self.config["window"]  # type: dict
+        self.setGeometry(pos["x"], pos["y"], pos["width"], pos["height"])
         self.setWindowTitle('SSH Manager')
         self.setWindowIcon(QtGui.QIcon('icon.png'))
 
@@ -67,7 +68,7 @@ class SshManager(QtGui.QWidget):
             SLOT("list_widget_item_double_clicked(QListWidgetItem*)")
         )
 
-    def connections_load(self):
+    def load_config_file(self):
         """ Load saved connections """
         config_file_path = self._get_config_file_path()
         # create default config file if not exists
@@ -86,9 +87,15 @@ class SshManager(QtGui.QWidget):
     def list_widget_item_double_clicked(self):
         """ ListWidget Double click listener """
         index = self.list_widget.selectedIndexes()[0].row()
-        connection = self.config['connections'][index]
 
-        self._run("ssh", connection['uri'])
+        connection = self.config['connections'][index]  # type: dict
+
+        if "port" in connection:
+            port = connection["port"]
+        else:
+            port = 22
+
+        self._run("ssh", connection['host'], "-p", str(port))
 
     @pyqtSlot()
     def return_pressed(self):
