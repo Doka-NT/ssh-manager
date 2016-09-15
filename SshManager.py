@@ -90,12 +90,17 @@ class SshManager(QtGui.QWidget):
 
         connection = self.config['connections'][index]  # type: dict
 
+        args = [connection['host']]
         if "port" in connection:
+            args.append("-p")
             port = connection["port"]
-        else:
-            port = 22
+            args.append(str(port))
 
-        self._run("ssh", connection['host'], "-p", str(port))
+        if "args" in connection:
+            for arg in connection["args"]:
+                args.append(arg)
+
+        self._run("ssh", args)
 
     @pyqtSlot()
     def return_pressed(self):
@@ -106,9 +111,9 @@ class SshManager(QtGui.QWidget):
     @pyqtSlot()
     def settings_button_clicked(self):
         """ Settings button click listener"""
-        self._run("edit", self._get_config_file_path())
+        self._run("edit", [self._get_config_file_path()])
 
-    def _run(self, command_name, *args):
+    def _run(self, command_name, args):
         """ Run command with args """
         command = self.config['command'][command_name] + list(args)
         subprocess.Popen(command)

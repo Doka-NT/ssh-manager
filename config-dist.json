@@ -20,8 +20,11 @@
       "port": 22
     },
     {
-      "host": "root@localhost",
-      "label": "Localhost with default port"
+      "host": "localhost",
+      "label": "Localhost with default port",
+      "args": [
+        "-l", "my_username"
+      ]
     }
   ]
 }
