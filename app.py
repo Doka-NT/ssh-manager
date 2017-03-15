@@ -1,14 +1,6 @@
-#!/usr/bin/python
-# simple.py
+#!/usr/bin/python3.5
 
-import sys
-from PyQt4 import QtGui
+from Application import Application
 
-from SshManager import SshManager
-
-app = QtGui.QApplication(sys.argv)
-
-sshManager = SshManager()
-sshManager.show()
-
-sys.exit(app.exec_())
+app = Application()
+app.run()

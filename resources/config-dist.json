@@ -5,7 +5,9 @@
       "-x",
       "ssh"
     ],
-    "edit": ["xdg-open"]
+    "edit": [
+      "xdg-open"
+    ]
   },
   "window": {
     "x": 300,
@@ -23,7 +25,8 @@
       "host": "localhost",
       "label": "Localhost with default port",
       "args": [
-        "-l", "my_username"
+        "-l",
+        "my_username"
       ]
     }
   ]
