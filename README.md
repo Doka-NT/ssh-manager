@@ -1,15 +1,15 @@
 # Ubuntu Desktop (GUI) ssh manager
-GUI ssh manager for Ubuntu 16.04 (not tested on below versions)
+GUI ssh manager for Linux (Ubuntu)
 
 ![alt tag](https://raw.githubusercontent.com/Doka-NT/ssh-manager/master/screenshot.png)
 # Requirements
-- PyQt4
+- python 3.5+
 
 # Run
 ```bash
-python app.py
+python3.5 app.py
 ```
 
 # Config
-config.json file will be created after first run.
-Edit it as you need.
+Application can be configured by json configuration file. 
+All connections defines in section connections, like provided examples.

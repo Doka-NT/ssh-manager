@@ -3,10 +3,14 @@
     "ssh": [
       "gnome-terminal",
       "-x",
-      "ssh"
+      "ssh",
+      "$host",
+      "-p",
+      "$port"
     ],
     "edit": [
-      "xdg-open"
+      "xdg-open",
+      "$file"
     ]
   },
   "window": {

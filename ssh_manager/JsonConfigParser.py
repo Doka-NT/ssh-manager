@@ -14,6 +14,7 @@ class JsonConfigParser(AbstractConfigParser):
 
         self._parse_connections(json_object, config)
         self._parse_window(json_object, config)
+        self._parse_commands(json_object, config)
 
         return config
 
@@ -23,7 +24,14 @@ class JsonConfigParser(AbstractConfigParser):
         for _connection in json_object['connections']:
             if 'port' not in _connection:
                 _connection['port'] = Connection.DEFAULT_PORT
-            connection = Connection(_connection['label'], _connection['host'], _connection['port'])
+            if 'args' not in _connection:
+                _connection['args'] = []
+            connection = Connection(
+                _connection['label'],
+                _connection['host'],
+                _connection['port'],
+                _connection['args']
+            )
             config.add_connection(connection)
 
     @staticmethod
@@ -31,3 +39,8 @@ class JsonConfigParser(AbstractConfigParser):
         _window = json_object['window']
         window = Window(_window['x'], _window['y'], _window['width'], _window['height'])
         config.set_window(window)
+
+    def _parse_commands(self, json_object: dict, config: Config):
+        for name, args in json_object['command'].items():
+            command = self._command_factory.create_command(name, args)
+            config.add_command(name, command)

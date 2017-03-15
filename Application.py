@@ -14,13 +14,13 @@ class Application(AbstractApplication):
         config = self.get_config(config_file_path)
         manager = self.get_manager(config)
 
-        window = ConnectionListWindow(manager, config.get_window())
+        window = ConnectionListWindow(manager, config.get_window(), config.get_ssh_command(), config.get_edit_command())
         window.show()
 
     @staticmethod
     def get_config_file_path() -> str:
         home = expanduser("~")
-        return home + sep + '_______sshManager.config.json'
+        return home + sep + '.sshManager.config.json'
 
     @staticmethod
     def get_manager(config: Config):

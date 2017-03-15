@@ -1,6 +1,6 @@
-from os import system
-
 from gi import require_version
+
+from ssh_manager.config.Commands.AbtractCommand import AbstractCommand
 
 require_version('Gdk', '3.0')
 require_version('Gtk', '3.0')
@@ -15,12 +15,23 @@ from ssh_manager.config.Window import Window
 class ConnectionListWindow:
     VERTICAL_MARGIN = 5
     HORIZONTAL_MARGIN = 2
+
+    __command_ssh = None
+    __command_edit = None
+
     _listbox = None
     _frame = None
     _scrollable = None
     _list_store = Gtk.ListStore(str)
 
-    def __init__(self, manager: Manager, window_config: Window):
+    def __init__(
+            self, manager: Manager,
+            window_config: Window,
+            command_ssh: AbstractCommand,
+            command_edit: AbstractCommand
+    ):
+        self.__command_ssh = command_ssh
+        self.__command_edit = command_edit
         self._manager = manager
         self._window_config = window_config
 
@@ -71,9 +82,8 @@ class ConnectionListWindow:
         Gtk.main()
 
     # noinspection PyUnusedLocal
-    @staticmethod
-    def btn_settings_click(target):
-        system("xdg-open " + Application.Application.get_config_file_path())
+    def btn_settings_click(self, target):
+        self.__command_edit.run(Application.Application.get_config_file_path())
 
     # noinspection PyUnusedLocal
     def btn_reload_click(self, target):
@@ -97,4 +107,4 @@ class ConnectionListWindow:
     def row_activated(self, target: Gtk.TreeView, path: Gtk.TreePath, column: Gtk.TreeViewColumn):
         i = path.get_indices()[0]
         connection = self._manager.get_connection(i)
-        system("gnome-terminal -x ssh {} -p {}".format(connection.host, connection.port))
+        self.__command_ssh.run(connection, connection.args)
