@@ -1,10 +1,20 @@
+from abc import ABCMeta, abstractmethod
 from json import loads
 
-from ssh_manager import ConfigurationFile
-from ssh_manager.Connection import Connection
-from ssh_manager.config.Config import Config
-from ssh_manager.config.Window import Window
-from ssh_manager.interfaces.AbstractConfigParser import AbstractConfigParser
+from manager.command import CommandFactory
+from manager.config import Config, Window, Connection, AbstractConfigurationFile, ConfigurationFile
+
+
+class AbstractConfigParser:
+    __metaclass__ = ABCMeta
+    _command_factory = None
+
+    def __init__(self):
+        self._command_factory = CommandFactory()
+
+    @abstractmethod
+    def parse(self, file: AbstractConfigurationFile):
+        pass
 
 
 class JsonConfigParser(AbstractConfigParser):

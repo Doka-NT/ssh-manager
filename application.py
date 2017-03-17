@@ -1,11 +1,18 @@
+from abc import ABCMeta, abstractmethod
 from os.path import expanduser, sep
 
-from ssh_manager.ConfigurationFile import ConfigurationFile
-from ssh_manager.JsonConfigParser import JsonConfigParser
-from ssh_manager.Manager import Manager
-from ssh_manager.config.Config import Config
-from ssh_manager.interfaces.AbstractApplication import AbstractApplication
-from ui.ConnectionListWindow import ConnectionListWindow
+from gui.window import ConnectionListWindow
+from manager.config import Config, ConfigurationFile
+from manager.manager import Manager
+from manager.parser import JsonConfigParser
+
+
+class AbstractApplication:
+    __metaclass__ = ABCMeta
+
+    @abstractmethod
+    def run(self):
+        pass
 
 
 class Application(AbstractApplication):

@@ -1,6 +1,6 @@
 #!/usr/bin/python3.5
 
-from Application import Application
+from application import Application
 
 app = Application()
 app.run()

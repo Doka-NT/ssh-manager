@@ -1,4 +1,4 @@
-from ssh_manager.Connection import Connection
+from manager.config import Connection
 
 
 class Manager:

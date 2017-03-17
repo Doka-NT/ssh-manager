@@ -1,15 +1,15 @@
 from gi import require_version
 
-from ssh_manager.config.Commands.AbtractCommand import AbstractCommand
+from manager.command import AbstractCommand
+from manager.config import Window
 
 require_version('Gdk', '3.0')
 require_version('Gtk', '3.0')
 
 from gi.repository import Gtk
 
-import Application
-from ssh_manager.Manager import Manager
-from ssh_manager.config.Window import Window
+import application
+from manager.manager import Manager
 
 
 class ConnectionListWindow:
@@ -83,11 +83,11 @@ class ConnectionListWindow:
 
     # noinspection PyUnusedLocal
     def btn_settings_click(self, target):
-        self.__command_edit.run(Application.Application.get_config_file_path())
+        self.__command_edit.run(application.Application.get_config_file_path())
 
     # noinspection PyUnusedLocal
     def btn_reload_click(self, target):
-        self._manager = Application.Application.create_default_manager()
+        self._manager = application.Application.create_default_manager()
         self._fill_listbox()
 
     def _fill_listbox(self):
