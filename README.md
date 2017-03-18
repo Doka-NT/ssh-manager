@@ -7,7 +7,15 @@ GUI ssh manager for Linux (Ubuntu)
 
 # Run
 ```bash
-python3.5 app.py
+# To run console version type (use -h option to see all available options):
+ssh-manager
+# To run GUI version type:
+ssh-manager-gtk 
+```
+
+# Building deb package
+```bash
+python3.5 setup.py --command-packages=stdeb.command bdist_deb
 ```
 
 # Config
