@@ -8,5 +8,7 @@ setup(name='SshManager',
       url='https://github.com/Doka-NT/ssh-manager',
       py_modules=['application', 'ssh-manager', 'ssh-manager-gtk'],
       packages=['gui', 'manager'],
-      scripts=['ssh-manager', 'ssh-manager-gtk']
+      scripts=['ssh-manager', 'ssh-manager-gtk'],
+      data_files=[('share/applications/ssh-manager', ['ssh-manager.desktop']),
+                  ('share/pixmaps', ['ssh-manager.png'])],
       )

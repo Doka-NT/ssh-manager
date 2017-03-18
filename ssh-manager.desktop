@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Ssh Manager
+Comment=GUI ssh manager for Linux (Ubuntu)
+Keywords=shell;prompt;command;commandline;cmd;
+Exec=ssh-manager-gtk
+Icon=/usr/share/pixmaps/ssh-manager.png
+Type=Application
+StartupNotify=true
+X-GNOME-SingleWindow=false
+OnlyShowIn=GNOME;Unity;
+Actions=New
