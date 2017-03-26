@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from genericpath import exists
-from os.path import dirname
+from os.path import dirname, join
 from shutil import copy
 
 from manager.command import EditCommand, SshCommand, AbstractCommand
@@ -90,5 +90,5 @@ class ConfigurationFile(AbstractConfigurationFile):
     def _create_if_not_exists(self):
         if exists(self._file_path):
             return
-        dist_file = dirname(__file__) + '/../resources/config-dist.json'
+        dist_file = join(dirname(__file__), '..', 'resources', 'config-dist.json')
         copy(dist_file, self._file_path)
