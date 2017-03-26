@@ -16,81 +16,84 @@ class ConnectionListWindow:
     VERTICAL_MARGIN = 5
     HORIZONTAL_MARGIN = 2
 
-    __command_ssh = None
-    __command_edit = None
-
-    _listbox = None
-    _frame = None
-    _scrollable = None
-    _list_store = Gtk.ListStore(str)
-
     def __init__(
             self, manager: Manager,
             window_config: Window,
             command_ssh: AbstractCommand,
             command_edit: AbstractCommand
     ):
+        self._listbox = None
+        self._frame = None
+        self._scrollable = None
+        self._btn_reload = None
+        self._btn_settings = None
+        self._list_store = Gtk.ListStore(str)
+
         self.__command_ssh = command_ssh
         self.__command_edit = command_edit
         self._manager = manager
         self._window_config = window_config
 
     def show(self):
-        win = Gtk.Window()
-        win.set_size_request(self._window_config.width, self._window_config.height)
-        win.move(self._window_config.x, self._window_config.y)
-        win.set_resizable(False)
+        win = self.__create_window()
 
+        self.__setup_ui(win)
+        self.__setup_ui_listeners(win)
+
+        win.show_all()
+        Gtk.main()
+
+    def __setup_ui_listeners(self, win):
+        self._btn_settings.connect("clicked", self.__btn_settings_click)
+        self._btn_reload.connect("clicked", self.__btn_reload_click)
+        win.connect("delete-event", Gtk.main_quit)
+
+    def __setup_ui(self, win):
         btn_setting = Gtk.Button("Settings")
         btn_setting.set_margin_right(self.HORIZONTAL_MARGIN)
         btn_reload = Gtk.Button("Reload")
-
         btn_box = Gtk.HBox()
         btn_box.add(btn_setting)
         btn_box.add(btn_reload)
-
         self._listbox = Gtk.TreeView(self._list_store)
         self._listbox.set_headers_visible(False)
-        self._listbox.connect("row-activated", self.row_activated)
-
+        self._listbox.connect("row-activated", self.__row_activated)
         self._scrollable = Gtk.ScrolledWindow()
         self._scrollable.add(self._listbox)
-        self._fill_listbox()
-
+        self.__fill_listbox()
         self._frame = Gtk.Frame()
         self._frame.add(self._scrollable)
         self._frame.set_border_width(1)
         self._frame.set_margin_bottom(self.VERTICAL_MARGIN)
-
         vbox = Gtk.VBox()
         vbox.pack_start(self._frame, 1, 1, 1)
         vbox.pack_end(btn_box, 0, 0, 0)
-
         vbox.set_margin_top(self.VERTICAL_MARGIN)
         vbox.set_margin_bottom(self.VERTICAL_MARGIN)
         vbox.set_margin_left(self.VERTICAL_MARGIN)
         vbox.set_margin_right(self.VERTICAL_MARGIN)
-
-        btn_setting.connect("clicked", self.btn_settings_click)
-        btn_reload.connect("clicked", self.btn_reload_click)
-
         win.add(vbox)
+        return btn_reload, btn_setting
 
+    def __create_window(self):
+        win = Gtk.Window()
+        win.set_size_request(self._window_config.width, self._window_config.height)
+        win.move(self._window_config.x, self._window_config.y)
+        win.set_resizable(False)
         win.set_title("SshManager GTK")
-        win.connect("delete-event", Gtk.main_quit)
-        win.show_all()
-        Gtk.main()
+
+        return win
 
     # noinspection PyUnusedLocal
-    def btn_settings_click(self, target):
+    def __btn_settings_click(self, target):
         self.__command_edit.run(application.GtkApplication.get_config_file_path())
 
     # noinspection PyUnusedLocal
-    def btn_reload_click(self, target):
+    def __btn_reload_click(self, target):
         self._manager = application.GtkApplication.create_default_manager()
-        self._fill_listbox()
+        self.__fill_listbox()
 
-    def _fill_listbox(self):
+    def __fill_listbox(self):
         self._list_store.clear()
         connections = self._manager.get_connections()
         for connection in connections:
@@ -104,7 +107,7 @@ class ConnectionListWindow:
         self._listbox.show_all()
 
     # noinspection PyUnusedLocal
-    def row_activated(self, target: Gtk.TreeView, path: Gtk.TreePath, column: Gtk.TreeViewColumn):
+    def __row_activated(self, target: Gtk.TreeView, path: Gtk.TreePath, column: Gtk.TreeViewColumn):
         i = path.get_indices()[0]
         connection = self._manager.get_connection(i)
         self.__command_ssh.run(connection, connection.args)

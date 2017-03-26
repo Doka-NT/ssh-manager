@@ -1,10 +1,14 @@
+from abc import ABCMeta, abstractmethod
 from os import system
 
 
 class AbstractCommand:
+    __metaclass__ = ABCMeta
+
     def __init__(self, args: list):
         self._args = args
 
+    @abstractmethod
     def run(self, *args):
         pass
 
@@ -13,8 +17,8 @@ class EditCommand(AbstractCommand):
     def run(self, *args):
         super().run(*args)
         cmd = self._args
-        file = args[0]
-        command = " ".join(cmd).replace("$file", file)
+        f = args[0]
+        command = " ".join(cmd).replace("$file", f)
         system(command)
 
 

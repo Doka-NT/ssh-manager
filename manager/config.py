@@ -7,11 +7,6 @@ from manager.command import EditCommand, SshCommand, AbstractCommand
 
 
 class Window:
-    x = 0
-    y = 0
-    width = 0
-    height = 0
-
     def __init__(self, x: int, y: int, width: int, height: int):
         self.x = x
         self.y = y
@@ -32,10 +27,6 @@ class Command:
 
 class Connection:
     DEFAULT_PORT = 22
-    label = ''
-    host = ''
-    port = 0
-    args = []
 
     def __init__(self, label: str, host: str, port: int, args: list):
         self.label = label
@@ -45,9 +36,10 @@ class Connection:
 
 
 class Config:
-    _connections = []
-    _window = None
-    _commands = {}
+    def __init__(self) -> None:
+        self._connections = []
+        self._window = None
+        self._commands = {}
 
     def add_connection(self, connection: Connection):
         self._connections.append(connection)
@@ -86,8 +78,6 @@ class AbstractConfigurationFile:
 
 
 class ConfigurationFile(AbstractConfigurationFile):
-    _file_path = ''
-
     def __init__(self, file_path):
         super(ConfigurationFile, self).__init__()
         self._file_path = file_path

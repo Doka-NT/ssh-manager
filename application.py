@@ -1,6 +1,6 @@
 import argparse
 from abc import ABCMeta, abstractmethod
-from os.path import expanduser, sep
+from os.path import expanduser, join
 
 from gui.window import ConnectionListWindow
 from manager.config import Config, ConfigurationFile
@@ -18,12 +18,11 @@ class AbstractApplication:
 
     @abstractmethod
     def run(self):
-        pass
+        raise NotImplementedError("Cannot run application because `run` method is not implemented")
 
     @staticmethod
     def get_config_file_path() -> str:
-        home = expanduser("~")
-        return home + sep + '.sshManager.config.json'
+        return join(expanduser("~"), '.sshManager.config.json')
 
     @staticmethod
     def get_manager(config: Config):
