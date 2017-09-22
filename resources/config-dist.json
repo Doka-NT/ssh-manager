@@ -3,9 +3,15 @@
     "ssh": [
       "gnome-terminal",
       "-x",
-      "ssh"
+      "ssh",
+      "$host",
+      "-p",
+      "$port"
     ],
-    "edit": ["xdg-open"]
+    "edit": [
+      "xdg-open",
+      "$file"
+    ]
   },
   "window": {
     "x": 300,
@@ -23,7 +29,8 @@
       "host": "localhost",
       "label": "Localhost with default port",
       "args": [
-        "-l", "my_username"
+        "-l",
+        "my_username"
       ]
     }
   ]

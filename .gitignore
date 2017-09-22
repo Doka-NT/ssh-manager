@@ -1,5 +1,6 @@
 .idea/
-
 config.json
-
-ssh-manager.desktop
+MANIFEST
+deb_dist/
+dist
+SshManager-2.0.tar.gz
