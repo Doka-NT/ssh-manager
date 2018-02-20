@@ -49,12 +49,12 @@ class ConnectionListWindow:
         win.connect("delete-event", Gtk.main_quit)
 
     def __setup_ui(self, win):
-        btn_setting = Gtk.Button("Settings")
-        btn_setting.set_margin_right(self.HORIZONTAL_MARGIN)
-        btn_reload = Gtk.Button("Reload")
+        self._btn_settings = Gtk.Button("Settings")
+        self._btn_settings.set_margin_right(self.HORIZONTAL_MARGIN)
+        self._btn_reload = Gtk.Button("Reload")
         btn_box = Gtk.HBox()
-        btn_box.add(btn_setting)
-        btn_box.add(btn_reload)
+        btn_box.add(self._btn_settings)
+        btn_box.add(self._btn_reload)
         self._listbox = Gtk.TreeView(self._list_store)
         self._listbox.set_headers_visible(False)
         self._listbox.connect("row-activated", self.__row_activated)
@@ -73,7 +73,7 @@ class ConnectionListWindow:
         vbox.set_margin_left(self.VERTICAL_MARGIN)
         vbox.set_margin_right(self.VERTICAL_MARGIN)
         win.add(vbox)
-        return btn_reload, btn_setting
+        return self._btn_reload, self._btn_settings
 
     def __create_window(self):
         win = Gtk.Window()
