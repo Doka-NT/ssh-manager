@@ -4,6 +4,7 @@ GUI ssh manager for Linux (Ubuntu)
 ![alt tag](https://raw.githubusercontent.com/Doka-NT/ssh-manager/master/screenshot.png)
 # Requirements
 - python 3.5+
+- sudo apt install python3-stdeb
 
 # Run
 ```bash
