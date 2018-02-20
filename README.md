@@ -13,10 +13,17 @@ ssh-manager
 ssh-manager-gtk 
 ```
 
-# Building deb package
+# Building deb package (optional)
 ```bash
 python3.5 setup.py --command-packages=stdeb.command bdist_deb
 ```
+
+# Install
+```bash
+python3 setup.py install
+```
+
+After installation you can run it with `ssh-manager` for CLI or `ssh-manager-gtk` for GUI interfaces
 
 # Config
 Application can be configured by json configuration file. 
